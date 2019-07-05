@@ -26,11 +26,11 @@ count = (args.count)
 #controllo che sia installato multipass e aggiungo multipass.exe al $PATH
 
 if os.name == 'nt':
-    WINMULTIPASS="c:\\Program Files\\Multipass"
+    WINMULTIPASS="c:"+os.sep+"Program Files"+os.sep+"Multipass"
     MULTIPASS="multipass.exe"
     if os.path.isdir(WINMULTIPASS):
-        os.environ["PATH"] += os.pathsep + WINMULTIPASS + os.pathsep +"bin"
-    if not os.path.isfile(WINMULTIPASS+"\\bin\\"+MULTIPASS):
+        os.environ["PATH"] += os.pathsep + WINMULTIPASS + os.sep +"bin"
+    if not os.path.isfile(WINMULTIPASS+os.sep+"bin"+os.sep+MULTIPASS):
         print("Install multipass 0.7.0, please.")
         print("https://github.com/CanonicalLtd/multipass/releases/tag/v0.7.0")
         sys.exit(1)
