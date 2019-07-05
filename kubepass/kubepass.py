@@ -23,7 +23,7 @@ size = (args.size)
 count = (args.count)
 
 
-#controllo che sia installato multipass e che multipass.exe sia sul $PATH
+#controllo che sia installato multipass e aggiungo multipass.exe al $PATH
 
 if os.name == 'nt':
     WINMULTIPASS="c:\\Program Files\\Multipass"
@@ -44,7 +44,7 @@ if not os.path.isfile(YAML):
     sys.exit(1)
 
 def build(COUNT, ARGS_MASTER, ARGS_WORKERS):
-    print(MULTIPASS+ " launch -n kube-master "+ARGS_MASTER+"  --cloud-init "+YAML)
+    print(MULTIPASS+ " launch -n kube-master "+ARGS_MASTER+" --cloud-init "+YAML)
     #os.system(MULTIPASS+ "launch -n kube-master -c 2 -d 25G -m 4G  --cloud-init "+YAML)
     for i in range(1, COUNT+1):
         NODE = "kube-node"+str(i)
@@ -55,13 +55,13 @@ def build(COUNT, ARGS_MASTER, ARGS_WORKERS):
     
 
 if size == 'small':
-    print("Creating Small Kubernetes Cluster: master 2G, $NUM workers 1G, disk 10G")
+    print("Creating Small Kubernetes Cluster: master 2G, %s workers 1G, disk 10G" % count)
     build(count, "-c 2 -d 10G -m 2G", "-c 1 -d 10G -m 1G")
     
 if size == 'large': 
-    print("Creating Large Kubernetes Cluster: master 2G, 3 workers 2G, disk 15G")
+    print("Creating Large Kubernetes Cluster: master 2G, %s workers 2G, disk 15G" % count)
     build(count, "-c 2 -d 15G -m 2G", "-c 1 -d 15G -m 2G")
 
 if size == 'huge': 
-    print("Creating Huge Kubernetes Cluster: master 4G, 3 workers 4G, disk 25G")
+    print("Creating Huge Kubernetes Cluster: master 4G, %s workers 4G, disk 25G" % count)
     build(count, "-c 2 -d 25G -m 4G", "-c 2 -d 25G -m 4G")    
