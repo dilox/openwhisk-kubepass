@@ -44,13 +44,12 @@ if not os.path.isfile(YAML):
     sys.exit(1)
 
 def build(COUNT, ARGS_MASTER, ARGS_WORKERS):
-    print(MULTIPASS+ " launch -n kube-master "+ARGS_MASTER+" --cloud-init "+YAML)
-    #os.system(MULTIPASS+ "launch -n kube-master -c 2 -d 25G -m 4G  --cloud-init "+YAML)
+    os.system(MULTIPASS+ " launch -n kube-master "+ARGS_MASTER+" --cloud-init "+YAML)
     for i in range(1, COUNT+1):
         NODE = "kube-node"+str(i)
         print(MULTIPASS+" launch -n "+NODE+" "+ARGS_WORKERS+" --cloud-init "+YAML)
-    print(MULTIPASS+" exec kube-master -- cloud-init status --wait")
-    print(MULTIPASS+" exec kube-master -- wait-ready "+str(COUNT+1))   
+    os.system(MULTIPASS+" exec kube-master -- cloud-init status --wait")
+    os.system(MULTIPASS+" exec kube-master -- wait-ready "+str(COUNT+1))   
     print("Ready!")
     
 
