@@ -2,6 +2,9 @@
 
 import argparse
 import os
+import sys
+
+#usage: python kubepass.py [-h] {small,large,huge} [{1,2,3,4,5}]
 
 parser = argparse.ArgumentParser(description='Create you kube cluster')
 parser.add_argument("size",
@@ -11,29 +14,54 @@ parser.add_argument("count",
     nargs="?",
     type=int,
     help="<worker-count>",
-    default="3")
+    default="3",
+    choices=range(1,6))
 
 args = parser.parse_args()
 
-print(args.size)
-print(args.count)
+size = (args.size)
+count = (args.count)
 
+
+#controllo che sia installato multipass e che multipass.exe sia sul $PATH
 
 if os.name == 'nt':
     WINMULTIPASS="c:\\Program Files\\Multipass"
     MULTIPASS="multipass.exe"
     if os.path.isdir(WINMULTIPASS):
-        os.environ["PATH"] += os.pathsep + WINMULTIPASS + "\\bin"
-
+        os.environ["PATH"] += os.pathsep + WINMULTIPASS + os.pathsep +"bin"
     if not os.path.isfile(WINMULTIPASS+"\\bin\\"+MULTIPASS):
         print("Install multipass 0.7.0, please.")
         print("https://github.com/CanonicalLtd/multipass/releases/tag/v0.7.0")
+        sys.exit(1)
+        
 
+#controlla che esista file kubepass.yaml 
 
+YAML = "kubepass.yaml"
+if not os.path.isfile(YAML):
+    print("no "+YAML)
+    sys.exit(1)
 
+def build(COUNT, ARGS_MASTER, ARGS_WORKERS):
+    print(MULTIPASS+ " launch -n kube-master "+ARGS_MASTER+"  --cloud-init "+YAML)
+    #os.system(MULTIPASS+ "launch -n kube-master -c 2 -d 25G -m 4G  --cloud-init "+YAML)
+    for i in range(1, COUNT+1):
+        NODE = "kube-node"+str(i)
+        print(MULTIPASS+" launch -n "+NODE+" "+ARGS_WORKERS+" --cloud-init "+YAML)
+    print(MULTIPASS+" exec kube-master -- cloud-init status --wait")
+    print(MULTIPASS+" exec kube-master -- wait-ready "+str(COUNT+1))   
+    print("Ready!")
+    
 
+if size == 'small':
+    print("Creating Small Kubernetes Cluster: master 2G, $NUM workers 1G, disk 10G")
+    build(count, "-c 2 -d 10G -m 2G", "-c 1 -d 10G -m 1G")
+    
+if size == 'large': 
+    print("Creating Large Kubernetes Cluster: master 2G, 3 workers 2G, disk 15G")
+    build(count, "-c 2 -d 15G -m 2G", "-c 1 -d 15G -m 2G")
 
-
-
-
- 
+if size == 'huge': 
+    print("Creating Huge Kubernetes Cluster: master 4G, 3 workers 4G, disk 25G")
+    build(count, "-c 2 -d 25G -m 4G", "-c 2 -d 25G -m 4G")    
