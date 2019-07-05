@@ -106,3 +106,4 @@ venv.bak/
 .vscode/
 kubepass/esempio.py
 kubepass/esempio.sh
+network-cache
