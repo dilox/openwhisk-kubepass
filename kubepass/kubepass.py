@@ -67,7 +67,8 @@ def destroy(COUNT):
 
 
 def are_you_sure():
-  if input("are you sure? (y/n)") != "y":
+  answer = input("are you sure? (y/n)")
+  if answer[0].lower() != 'y':
     exit()
 
 
