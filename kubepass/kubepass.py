@@ -59,10 +59,11 @@ def build(COUNT, ARGS_MASTER, ARGS_WORKERS):
     os.system(MULTIPASS+" exec kube-master -- cloud-init status --wait")
     os.system(MULTIPASS+" exec kube-master -- wait-ready "+str(COUNT+1))
 
-    #nel caso venga specificata l'opzione --dashboard, viene deployata anche la web ui
+    # nel caso venga specificata l'opzione --dashboard, viene deployata anche la web ui
     if args.dashboard == True:
         print("Install Web Ui Dashboard")
-        os.system("kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta1/aio/deploy/recommended.yaml")
+        os.system(
+            "kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta1/aio/deploy/recommended.yaml")
 
     print("Ready!")
 
