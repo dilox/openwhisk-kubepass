@@ -30,10 +30,12 @@ if os.name == 'nt':
     MULTIPASS = "multipass.exe"
     if os.path.isdir(WINMULTIPASS):
         os.environ["PATH"] += os.pathsep + WINMULTIPASS + os.sep + "bin"
-    if not os.path.isfile(WINMULTIPASS+os.sep+"bin"+os.sep+MULTIPASS):
-        print("Install multipass 0.7.0, please.")
-        print("https://github.com/CanonicalLtd/multipass/releases/tag/v0.7.0")
-        sys.exit(1)
+    
+    
+if not os.path.isfile(WINMULTIPASS+os.sep+"bin"+os.sep+MULTIPASS):
+    print("Install multipass 0.7.0, please.")
+    print("https://github.com/CanonicalLtd/multipass/releases/tag/v0.7.0")
+    sys.exit(1)
 
 
 # controlla che esista file kubepass.yaml
@@ -67,7 +69,7 @@ def destroy(COUNT):
 
 
 def are_you_sure():
-  answer = input("are you sure? (y/n)")
+  answer = input("are you sure? (y/n) ")
   if answer[0].lower() != 'y':
     exit()
 
