@@ -21,6 +21,11 @@ parser.add_argument("-d",
                     help="<deploy Web UI Dashboard>",
                     action="store_true")
 
+parser.add_argument("-r",
+                    "--rook",
+                    help="<deploy rook>",
+                    action="store_true")
+
 args = parser.parse_args()
 
 size = (args.size)
@@ -65,7 +70,15 @@ def build(COUNT, ARGS_MASTER, ARGS_WORKERS):
         os.system(
             "kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta1/aio/deploy/recommended.yaml")
 
-    print("Ready!")
+    # nel caso venga specificata l'opzione --rook viene deployato anche root
+    if args.rook == True:
+        print("Install rook")
+        os.environ["ROOK"] = "https://raw.githubusercontent.com/rook/rook/release-0.9/cluster/examples/kubernetes/ceph"
+        os.system("kubectl apply - f "+ROOK+"/operator.yaml")
+        os.system("kubectl apply - f "+ROOK+"/cluster.yaml")
+        os.system("kubectl apply - f "+ROOK+"/cluster.yaml")
+        os.system("kubectl patch storageclass rook-ceph-block - p '{\"metadata\": {\"annotations\":{\"storageclass.kubernetes.io/is-default-class\":\"true\"}}}'")
+        print("Ready!")
 
 
 def destroy(COUNT):
