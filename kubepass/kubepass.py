@@ -73,7 +73,7 @@ def build(COUNT, ARGS_MASTER, ARGS_WORKERS):
     # nel caso venga specificata l'opzione --rook viene deployato anche root
     if args.rook == True:
         print("Install rook")
-        os.environ["ROOK"] = "https://raw.githubusercontent.com/rook/rook/release-0.9/cluster/examples/kubernetes/ceph"
+        ROOK = "https://raw.githubusercontent.com/rook/rook/release-0.9/cluster/examples/kubernetes/ceph"
         os.system("kubectl apply - f "+ROOK+"/operator.yaml")
         os.system("kubectl apply - f "+ROOK+"/cluster.yaml")
         os.system("kubectl apply - f "+ROOK+"/cluster.yaml")
