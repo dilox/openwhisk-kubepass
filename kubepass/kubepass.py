@@ -3,6 +3,7 @@
 import argparse
 import os
 import sys
+import shutil
 
 # usage: python kubepass.py [-h] {small,large,huge,destroy} [{1,2,3,4,5}]
 
@@ -34,13 +35,14 @@ count = (args.count)
 # controllo che sia installato multipass e aggiungo multipass.exe al $PATH
 WINMULTIPASS = "c:"+os.sep+"Program Files"+os.sep+"Multipass"
 MULTIPASS = "multipass.exe"
-    
+
 if os.name == 'nt':
     if os.path.isdir(WINMULTIPASS):
         os.environ["PATH"] += os.pathsep + WINMULTIPASS + os.sep + "bin"
 
-
-if not os.path.isfile(WINMULTIPASS+os.sep+"bin"+os.sep+MULTIPASS):
+# if not os.path.isfile(WINMULTIPASS+os.sep+"bin"+os.sep+MULTIPASS):
+command = 'multipass'
+if shutil.which(command) is None:
     print("Install multipass 0.7.0, please.")
     print("https://github.com/CanonicalLtd/multipass/releases/tag/v0.7.0")
     sys.exit(1)
