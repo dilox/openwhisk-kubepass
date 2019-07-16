@@ -34,7 +34,7 @@ count = (args.count)
 
 # controllo che sia installato multipass e aggiungo multipass.exe al $PATH
 WINMULTIPASS = "c:"+os.sep+"Program Files"+os.sep+"Multipass"
-MULTIPASS = "multipass.exe"
+MULTIPASS = "multipass"
 
 if os.name == 'nt':
     if os.path.isdir(WINMULTIPASS):
