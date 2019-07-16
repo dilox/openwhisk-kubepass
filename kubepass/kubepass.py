@@ -60,7 +60,7 @@ def build(COUNT, ARGS_MASTER, ARGS_WORKERS):
     for i in range(1, COUNT+1):
         NODE = "kube-node"+str(i)
         os.system(MULTIPASS+" launch -n "+NODE+" " +
-              ARGS_WORKERS+" --cloud-init "+YAML)
+                  ARGS_WORKERS+" --cloud-init "+YAML)
     os.system(MULTIPASS+" exec kube-master -- cloud-init status --wait")
     os.system(MULTIPASS+" exec kube-master -- wait-ready "+str(COUNT+1))
 
@@ -77,7 +77,8 @@ def build(COUNT, ARGS_MASTER, ARGS_WORKERS):
         os.system("kubectl apply - f "+ROOK+"/operator.yaml")
         os.system("kubectl apply - f "+ROOK+"/cluster.yaml")
         os.system("kubectl apply - f "+ROOK+"/cluster.yaml")
-        os.system("kubectl patch storageclass rook-ceph-block - p '{\"metadata\": {\"annotations\":{\"storageclass.kubernetes.io/is-default-class\":\"true\"}}}'")
+        os.system(
+            "kubectl patch storageclass rook-ceph-block - p '{\"metadata\": {\"annotations\":{\"storageclass.kubernetes.io/is-default-class\":\"true\"}}}'")
         print("Ready!")
 
 
