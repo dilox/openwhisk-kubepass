@@ -59,7 +59,7 @@ def build(COUNT, ARGS_MASTER, ARGS_WORKERS):
               ARGS_MASTER+" --cloud-init "+YAML)
     for i in range(1, COUNT+1):
         NODE = "kube-node"+str(i)
-        print(MULTIPASS+" launch -n "+NODE+" " +
+        os.system(MULTIPASS+" launch -n "+NODE+" " +
               ARGS_WORKERS+" --cloud-init "+YAML)
     os.system(MULTIPASS+" exec kube-master -- cloud-init status --wait")
     os.system(MULTIPASS+" exec kube-master -- wait-ready "+str(COUNT+1))
