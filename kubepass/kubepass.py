@@ -76,11 +76,11 @@ def build(COUNT, ARGS_MASTER, ARGS_WORKERS):
     if args.rook == True:
         print("Install rook")
         ROOK = "https://raw.githubusercontent.com/rook/rook/release-0.9/cluster/examples/kubernetes/ceph"
-        os.system("kubectl apply - f "+ROOK+"/operator.yaml")
-        os.system("kubectl apply - f "+ROOK+"/cluster.yaml")
-        os.system("kubectl apply - f "+ROOK+"/cluster.yaml")
+        os.system("kubectl apply -f "+ROOK+"/operator.yaml")
+        os.system("kubectl apply -f "+ROOK+"/cluster.yaml")
+        os.system("kubectl apply -f "+ROOK+"/cluster.yaml")
         os.system(
-            "kubectl patch storageclass rook-ceph-block - p '{\"metadata\": {\"annotations\":{\"storageclass.kubernetes.io/is-default-class\":\"true\"}}}'")
+            "kubectl patch storageclass rook-ceph-block -p '{\"metadata\": {\"annotations\":{\"storageclass.kubernetes.io/is-default-class\":\"true\"}}}'")
         print("Ready!")
 
 
