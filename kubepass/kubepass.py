@@ -123,12 +123,3 @@ if size == 'config':
         are_you_sure()
     os.system(MULTIPASS+" exec kube-master -- sudo cat /etc/kubernetes/admin.conf >~/.kube/config")
  
-"""
- config)
-    if test -f ~/.kube/config
-    then echo "Overwriting ~/.kube/config"
-         are_you_sure
-    fi
-    "$MULTIPASS" exec kube-master -- sudo cat /etc/kubernetes/admin.conf >~/.kube/config
-
-"""   
