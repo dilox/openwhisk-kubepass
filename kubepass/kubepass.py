@@ -118,12 +118,12 @@ if size == 'destroy':
     destroy(count)
 
 if size == 'config':
-    if os.path.isfile("~/.kube/config"):
+    if os.path.isfile(os.environ["HOME"]+"/.kube/config"): 
         print("Overwriting ~/.kube/config")
         are_you_sure()
-    os.system(MULTIPASS+" exec kube-master -- sudo cat /etc/kubernetes/admin.conf >~/.kube/config"
+    os.system(MULTIPASS+" exec kube-master -- sudo cat /etc/kubernetes/admin.conf >~/.kube/config")
  
- """
+"""
  config)
     if test -f ~/.kube/config
     then echo "Overwriting ~/.kube/config"
