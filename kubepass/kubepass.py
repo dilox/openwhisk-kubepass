@@ -10,7 +10,7 @@ import shutil
 parser = argparse.ArgumentParser(description='Create you kube cluster')
 parser.add_argument("size",
                     help="<size of the cluster>",
-                    choices=['small', 'large', 'huge', 'destroy'])
+                    choices=['small', 'large', 'huge', 'destroy', 'config'])
 parser.add_argument("count",
                     nargs="?",
                     type=int,
@@ -116,3 +116,19 @@ if size == 'destroy':
     print("Destroying the cluster")
     are_you_sure()
     destroy(count)
+
+if size == 'config':
+    if os.path.isfile("~/.kube/config"):
+        print("Overwriting ~/.kube/config")
+        are_you_sure()
+    os.system(MULTIPASS+" exec kube-master -- sudo cat /etc/kubernetes/admin.conf >~/.kube/config"
+ 
+ """
+ config)
+    if test -f ~/.kube/config
+    then echo "Overwriting ~/.kube/config"
+         are_you_sure
+    fi
+    "$MULTIPASS" exec kube-master -- sudo cat /etc/kubernetes/admin.conf >~/.kube/config
+
+"""   
